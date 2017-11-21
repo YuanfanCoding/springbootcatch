@@ -36,8 +36,11 @@ public class IOhandler {
 
             line = br.readLine();
             while (line != null) {
-                ui = gson.fromJson(line, Userinfo.class);
-                if (ui.getName().equals(name) && ui.getPassword().equals(password)) break;
+                Userinfo u = gson.fromJson(line, Userinfo.class);
+                if (u.getName().equals(name) && u.getPassword().equals(password)) {
+                    ui=u;
+                    break;
+                }
                 line = br.readLine(); // 一次读入一行数据
             }
         } catch (Exception e) {
