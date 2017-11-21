@@ -1,5 +1,8 @@
 package com.catchman.serviceImpl;
 
+import com.catchman.model.Userinfo;
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,31 +26,27 @@ public class IOhandler {
 
     }
 
-    public static boolean isValid(String name, String password) {
-        boolean ispass = false;
+    public static Userinfo getUserInfo(String name, String password) {
+        Userinfo ui = null;
         try {
             InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(fileName))); // 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line = "";
+            Gson gson = new Gson();
+
             line = br.readLine();
-
             while (line != null) {
-                String infoarr[] = line.split(" ");
-
-                if (infoarr[0].equals(name) && infoarr[1].equals(password)) {
-                    ispass = true;
-                    break;
-                }
+                ui = gson.fromJson(line, Userinfo.class);
+                if (ui.getName().equals(name) && ui.getPassword().equals(password)) break;
                 line = br.readLine(); // 一次读入一行数据
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-
-        return ispass;
+        return ui;
     }
 
     public static void main(String[] args) {
-        System.out.println(isValid("123", "123"));
+
     }
 }
