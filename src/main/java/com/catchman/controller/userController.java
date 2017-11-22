@@ -5,10 +5,9 @@ import com.catchman.serviceImpl.IOhandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/V1")
@@ -28,8 +27,19 @@ public class userController {
 
     @RequestMapping(value = "/user",method = RequestMethod.GET)
     public Userinfo user(@RequestParam(value = "name", required = true) String name,
-                         @RequestParam(value = "password", required = true) String password) {
-        return IOhandler.getUserInfo(name,password);
+                         @RequestParam(value = "password", required = true) String password,
+                         @RequestParam(value = "mac", required = true) String mac) {
+        return IOhandler.getUserInfo(name, password, mac);
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public boolean user(@RequestBody Userinfo ui) {
+        return IOhandler.addUserInfo(ui);
+    }
+
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public boolean update(@RequestBody Userinfo ui) {
+        return IOhandler.update(ui);
     }
 
 }

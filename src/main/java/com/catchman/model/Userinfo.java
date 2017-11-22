@@ -13,7 +13,12 @@ public class Userinfo {
     private String pcnum;
     private ArrayList<String> pclist;
     private String catchnum;
+    private String areadynum;
     private String other;
+    private String currentmac;
+
+    public Userinfo() {
+    }
 
     public Userinfo(String id, String name, String password, String money,
                     String paytime, String limittime,String pcnum,String catchnum,String other) {
@@ -27,6 +32,7 @@ public class Userinfo {
         this.pcnum = pcnum;
         this.catchnum = catchnum;
         this.other=other;
+        this.areadynum = "0";
     }
 
     public Userinfo(String id, String name, String password, String money, String paytime, String limittime,
@@ -42,6 +48,13 @@ public class Userinfo {
         this.pclist = pclist;
         this.catchnum = catchnum;
         this.other=other;
+    }
+
+    public Userinfo(String name, String password, String areadycatchnum, String currentmac) {
+        this.name = name;
+        this.password = password;
+        this.areadynum = areadycatchnum;
+        this.currentmac = currentmac;
     }
 
     public String getId() {
@@ -107,6 +120,22 @@ public class Userinfo {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    public String getAreadynum() {
+        return areadynum;
+    }
+
+    public void setAreadynum(String areadynum) {
+        this.areadynum = areadynum;
+    }
+
+    public String getCurrentmac() {
+        return currentmac;
+    }
+
+    public void setCurrentmac(String currentmac) {
+        this.currentmac = currentmac;
     }
 
 
