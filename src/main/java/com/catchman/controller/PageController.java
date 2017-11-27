@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PageController {
     private Logger logger = LoggerFactory.getLogger(PageController.class);
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String login(Model model) {
         return "index";
     }
