@@ -9,16 +9,19 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class IOhandler {
 
-    private static final String fileName = "./userinfo";
+    private static final String userfileName = "./userinfo";
+    private static final String recordfileName = "./testrecord";
 
     public static boolean addUserInfo(Userinfo info) {
 
         try {
-            FileWriter writer = new FileWriter(fileName, true);
+            FileWriter writer = new FileWriter(userfileName, true);
             writer.write(new Gson().toJson(info) + "\r\n");
             writer.close();
             return true;
@@ -32,7 +35,7 @@ public class IOhandler {
         Userinfo ui = null;
         ArrayList<Userinfo> ulist = new ArrayList<>();
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(fileName))); // 建立一个输入流对象reader
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(userfileName))); // 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line = "";
             Gson gson = new Gson();
@@ -71,7 +74,7 @@ public class IOhandler {
         ArrayList<Userinfo> list = new ArrayList<>();
         Userinfo right_info = null;
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(fileName))); // 建立一个输入流对象reader
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(userfileName))); // 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line;
             Gson gson = new Gson();
@@ -103,7 +106,7 @@ public class IOhandler {
 
     private static void reWriteUserInfo(ArrayList<Userinfo> userinfos) {
         try {
-            FileWriter writer = new FileWriter(fileName, false);
+            FileWriter writer = new FileWriter(userfileName, false);
             for (Userinfo userinfo : userinfos) {
                 writer.write(new Gson().toJson(userinfo) + "\r\n");
                 writer.close();
@@ -112,4 +115,35 @@ public class IOhandler {
             e.printStackTrace();
         }
     }
+
+    public static Boolean getTestRecord(String mac) {
+        boolean isExit = false;
+        ArrayList<String> recordlist = new ArrayList<>();
+        try {
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(recordfileName))); // 建立一个输入流对象reader
+            BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                if (line.split(" ")[0].equals(mac) ){
+                    isExit=true;
+                    break;
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        if(!isExit) {
+            try {
+                FileWriter writer = new FileWriter(recordfileName, true);
+                writer.write(mac + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\r\n");
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return isExit;
+    }
+
 }
