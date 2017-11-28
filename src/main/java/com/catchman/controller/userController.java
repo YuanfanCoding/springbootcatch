@@ -25,6 +25,14 @@ public class userController {
         return new String (model.toString());
     }
 
+    /**
+     * 登录验证、获取用户信息接口
+     *
+     * @param name
+     * @param password
+     * @param mac
+     * @return
+     */
     @RequestMapping(value = "/user",method = RequestMethod.GET)
     public Userinfo user(@RequestParam(value = "name", required = true) String name,
                          @RequestParam(value = "password", required = true) String password,
@@ -32,11 +40,21 @@ public class userController {
         return IOhandler.getUserInfo(name, password, mac);
     }
 
+    /**
+     * 工具增加用户接口
+     * @param ui
+     * @return
+     */
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public boolean user(@RequestBody Userinfo ui) {
         return IOhandler.addUserInfo(ui);
     }
 
+    /**
+     * 客户端退出时更新mac列表接口
+     * @param ui
+     * @return
+     */
     @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public boolean update(@RequestBody Userinfo ui) {
         return IOhandler.update(ui);

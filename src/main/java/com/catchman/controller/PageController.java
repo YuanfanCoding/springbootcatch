@@ -15,4 +15,24 @@ public class PageController {
     public String login(Model model) {
         return "index";
     }
+
+    @RequestMapping(value = "/FBA", method = RequestMethod.GET)
+    public String FBA(Model model) {
+        return "FBA";
+    }
+
+    @RequestMapping(value = "/package", method = RequestMethod.GET)
+    public String Package(Model model) {
+        return "package";
+    }
+
+    @RequestMapping(value = "/software", method = RequestMethod.GET)
+    public String software(Model model) {
+        return "software";
+    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about(Model model) {
+        return "about";
+    }
 }

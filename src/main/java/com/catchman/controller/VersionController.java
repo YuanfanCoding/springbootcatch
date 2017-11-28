@@ -1,5 +1,6 @@
 package com.catchman.controller;
 
+import com.catchman.model.Constant;
 import com.catchman.serviceImpl.IOhandler;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
@@ -17,14 +18,14 @@ public class VersionController {
     @RequestMapping(value = "/version", method = RequestMethod.GET)
     @ResponseBody
     public String getVersion() {
-        return "V1.0";
+        return Constant.VERSION;
     }
 
     @RequestMapping(value = "/downloadsoftware", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downtestversion(@RequestParam(value = "type", required = true) String type)
             throws IOException {
 
-        String filePath = type.equals("1")?"E:/测试版.jar":"E:/测试版(未加密).jar";
+        String filePath = type.equals("1") ? Constant.TESTSOFTWARE : Constant.FORMATSOFTWARE;
         FileSystemResource file = new FileSystemResource(filePath);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");

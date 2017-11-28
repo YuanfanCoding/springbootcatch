@@ -1,5 +1,6 @@
 package com.catchman.serviceImpl;
 
+import com.catchman.model.Constant;
 import com.catchman.model.Userinfo;
 import com.google.gson.Gson;
 
@@ -15,8 +16,8 @@ import java.util.Date;
 
 public class IOhandler {
 
-    private static final String userfileName = "./userinfo";
-    private static final String recordfileName = "./testrecord";
+    private static final String userfileName = Constant.USERINFO;
+    private static final String recordfileName = Constant.TESTRECORD;
 
     public static boolean addUserInfo(Userinfo info) {
 
