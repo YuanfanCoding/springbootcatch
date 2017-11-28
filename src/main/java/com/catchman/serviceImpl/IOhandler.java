@@ -4,12 +4,7 @@ import com.catchman.model.Constant;
 import com.catchman.model.Userinfo;
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +17,8 @@ public class IOhandler {
     public static boolean addUserInfo(Userinfo info) {
 
         try {
-            FileWriter writer = new FileWriter(userfileName, true);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(userfileName, true), "UTF-8"));
+            //  FileWriter writer = new FileWriter(userfileName, true);
             writer.write(new Gson().toJson(info) + "\r\n");
             writer.close();
             return true;
@@ -36,7 +32,7 @@ public class IOhandler {
         Userinfo ui = null;
         ArrayList<Userinfo> ulist = new ArrayList<>();
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(userfileName))); // 建立一个输入流对象reader
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(userfileName), "UTF-8"); // 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line = "";
             Gson gson = new Gson();
@@ -75,7 +71,7 @@ public class IOhandler {
         ArrayList<Userinfo> list = new ArrayList<>();
         Userinfo right_info = null;
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(userfileName))); // 建立一个输入流对象reader
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(userfileName), "UTF-8");// 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line;
             Gson gson = new Gson();
@@ -93,7 +89,8 @@ public class IOhandler {
         }
 
         if (right_info != null) {
-            right_info.setAreadynum(ui.getAreadynum());
+            if (right_info.getCatchnum() != null && !right_info.getCatchnum().equals("无限制"))
+                right_info.setAreadynum(ui.getAreadynum());
             right_info.setCurrentmac(ui.getCurrentmac());
             ArrayList<String> arrayList = right_info.getPclist();
             arrayList.remove(ui.getCurrentmac());
@@ -107,7 +104,7 @@ public class IOhandler {
 
     private static void reWriteUserInfo(ArrayList<Userinfo> userinfos) {
         try {
-            FileWriter writer = new FileWriter(userfileName, false);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(userfileName, false), "UTF-8"));
             for (Userinfo userinfo : userinfos) {
                 writer.write(new Gson().toJson(userinfo) + "\r\n");
                 writer.close();
@@ -121,7 +118,7 @@ public class IOhandler {
         boolean isExit = false;
         ArrayList<String> recordlist = new ArrayList<>();
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(recordfileName))); // 建立一个输入流对象reader
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(recordfileName), "UTF-8"); // 建立一个输入流对象reader
             BufferedReader br = new BufferedReader(reader); //建立一个对象，它把文件内容转成计算机能读懂的语言
             String line = "";
             while ((line = br.readLine()) != null) {
@@ -137,7 +134,7 @@ public class IOhandler {
 
         if(!isExit) {
             try {
-                FileWriter writer = new FileWriter(recordfileName, true);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recordfileName, true), "UTF-8"));
                 writer.write(mac + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\r\n");
                 writer.close();
             } catch (IOException e) {
