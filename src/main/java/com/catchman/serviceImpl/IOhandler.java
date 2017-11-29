@@ -67,7 +67,6 @@ public class IOhandler {
 
 
     public static boolean update(Userinfo ui) {
-
         ArrayList<Userinfo> list = new ArrayList<>();
         Userinfo right_info = null;
         try {
@@ -96,6 +95,7 @@ public class IOhandler {
             arrayList.remove(ui.getCurrentmac());
             right_info.setPclist(arrayList);
             list.add(right_info);
+
         }
         reWriteUserInfo(list);
 
@@ -104,11 +104,13 @@ public class IOhandler {
 
     private static void reWriteUserInfo(ArrayList<Userinfo> userinfos) {
         try {
+
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(userfileName, false), "UTF-8"));
             for (Userinfo userinfo : userinfos) {
+                //    System.out.println(new Gson().toJson(userinfo));
                 writer.write(new Gson().toJson(userinfo) + "\r\n");
-                writer.close();
             }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
