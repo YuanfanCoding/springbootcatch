@@ -9,5 +9,5 @@ public class Constant {
     public static final String SOFTWAREPATH = "C:\\catchfile\\version\\Lazada收集助手.rar";
     public static final String USERINFO = "C:\\catchfile\\userinfo";//用户信息
     public static final String TESTRECORD = "C:\\catchfile\\testrecord";//测试版mac地址记录
-    public static final String VERSION = "V1.0";//版本号
+    public static final String VERSION = "V2.0";//版本号
 }
