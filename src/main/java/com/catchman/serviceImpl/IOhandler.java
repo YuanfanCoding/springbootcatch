@@ -116,7 +116,13 @@ public class IOhandler {
         }
     }
 
-    public static Boolean getTestRecord(String mac) {
+    /**
+     * 判断是否存在测试记录
+     *
+     * @param mac
+     * @return
+     */
+    public static Boolean isExsitTestRecord(String mac) {
         boolean isExit = false;
         ArrayList<String> recordlist = new ArrayList<>();
         try {
@@ -134,7 +140,18 @@ public class IOhandler {
             System.out.println(e.toString());
         }
 
-        if(!isExit) {
+        return isExit;
+    }
+
+
+    /**
+     * 保存测试的mac地址
+     *
+     * @param mac
+     * @return
+     */
+    public static Boolean saveTestRecord(String mac) {
+
             try {
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recordfileName, true), "UTF-8"));
                 writer.write(mac + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\r\n");
@@ -142,8 +159,9 @@ public class IOhandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        return isExit;
+
+
+        return true;
     }
 
 }

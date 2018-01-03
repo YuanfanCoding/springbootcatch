@@ -22,11 +22,11 @@ public class VersionController {
     }
 
     @RequestMapping(value = "/downloadsoftware", method = RequestMethod.GET)
-    public ResponseEntity<InputStreamResource> downtestversion(@RequestParam(value = "type", required = true) String type)
+    public ResponseEntity<InputStreamResource> downtestversion()
             throws IOException {
 
-        String filePath = type.equals("1") ? Constant.TESTSOFTWARE : Constant.FORMATSOFTWARE;
-        FileSystemResource file = new FileSystemResource(filePath);
+//        String filePath = type.equals("1") ? Constant.TESTSOFTWARE : Constant.FORMATSOFTWARE;
+        FileSystemResource file = new FileSystemResource(Constant.SOFTWAREPATH);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String(file.getFilename().getBytes("UTF-8"),"ISO-8859-1")));
@@ -41,9 +41,16 @@ public class VersionController {
                 .body(new InputStreamResource(file.getInputStream()));
     }
 
-    @RequestMapping(value = "/testrecord",method = RequestMethod.GET)
+    @RequestMapping(value = "/isExisTestrecord", method = RequestMethod.GET)
     @ResponseBody
-    public Boolean user(@RequestParam(value = "mac", required = true) String mac) {
-        return IOhandler.getTestRecord(mac);
+    public Boolean isExisTestrecord(@RequestParam(value = "mac", required = true) String mac) {
+        return IOhandler.isExsitTestRecord(mac);
+    }
+
+
+    @RequestMapping(value = "/saveTestrecord", method = RequestMethod.GET)
+    @ResponseBody
+    public Boolean saveTestrecord(@RequestParam(value = "mac", required = true) String mac) {
+        return IOhandler.saveTestRecord(mac);
     }
 }
